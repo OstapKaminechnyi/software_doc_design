@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>MVC_CRUD - Spring Boot With MySQL</title>
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-spacing: 0px;
+}
+
+th, td {
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>CourseId</th>
+				<th>Name</th>
+				<th>LastUpdated</th>
+				<th>Length</th>
+				<th>Effort</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="course : ${courses}">
+				<td th:text="${course.courseId}"></td>
+				<td th:text="${course.name}"></td>
+				<td th:text="${course.lastUpdated}"></td>
+				<td th:text="${course.length}"></td>
+				<td th:text="${course.effort}"></td>
+				<td><a th:href="@{/api/course/edit(courseId=${course.courseId})}">Edit</a></td>
+				<td><a th:href="@{/api/course/delete(courseId=${course.courseId})}">Delete</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+	<div  th:if="${course != null}">
+         <h2>Edit Course Information</h2> <a th:href="@{/index}">Create New Course</a>
+		 <form action="#" th:action="@{/api/course/add}" method="POST" th:object="${course}">
+			CourseId <input type="text" id="courseId" name="courseId" th:value="${course.courseId}" readonly="readonly" /><br />
+			 name <input type="text" id="name" name="name" th:value="${course.name}"/><br />
+			 lastUpdated <input type="text" id="lastUpdated" name="lastUpdated" th:value="${course.lastUpdated}"/><br />
+			 length <input type="text" id="length" name="length" th:value="${course.length}"/><br />
+			 effort <input type="text" id="effort" name="effort" th:value="${course.effort}"/><br />
+			<input type="submit" />
+		</form>
+	</div>
+	<div th:if="${course == null}">
+	   <h2>Create New Course</h2>
+	   <form action="#" th:action="@{/api/course/add}" method="POST" th:object="${course}">
+		   name <input type="text" id="name" name="name" /><br />
+		   lastUpdated <input type="text" id="lastUpdated" name="lastUpdated" /><br />
+		   length <input type="text" id="length" name="length" /><br />
+		   effort <input type="text" id="effort" name="effort" /><br />
+			<input type="submit" />
+		</form>
+	</div>
+	<h2>Search for Courses</h2>
+	<form action="#" th:action="@{/api/course/search}" th:object="${courseSearch}"
+		method="POST">
+		<input type="text" name="search" id="search"
+			th:value="${courseSearch}" /> <input type="submit" value="Search" />
+	</form>
+</body>
+</html>

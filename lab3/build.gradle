@@ -1,0 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'SpringBoot_MVC_CRUD_Thymeleaf'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+
+	//spring boot web api
+	compile('org.springframework.boot:spring-boot-starter-web')
+	//Thymeleaf api
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+
+	//jsp pages running api
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.4.1.RELEASE'
+	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
+	compile group: 'javax.servlet', name: 'jstl'
+	
+	//Jpa with MySql api
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+ 	compile('mysql:mysql-connector-java:5.1.6')
+ 	
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+ 		
+}
+
